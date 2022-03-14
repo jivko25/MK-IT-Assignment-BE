@@ -1,0 +1,27 @@
+{
+  "name": "mk-it-assignment-be",
+  "version": "1.0.0",
+  "description": "MK-IT-Assignment-BE",
+  "main": "index.js",
+  "scripts": {
+    "start" : "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jivko25/MK-IT-Assignment-BE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jivko25/MK-IT-Assignment-BE/issues"
+  },
+  "homepage": "https://github.com/jivko25/MK-IT-Assignment-BE#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.6",
+    "nodemon": "^2.0.15"
+  }
+}
