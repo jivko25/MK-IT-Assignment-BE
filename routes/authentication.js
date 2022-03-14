@@ -21,6 +21,7 @@ router.post('/register', async (req, res) => {
     const checkIfUserNameExist = await User.findOne({username : req.body.username});
     if(checkIfUserNameExist) return res.send(`User with username ${req.body.username} already exist`);
 
+    //Create user
     const user = new User({
         username : req.body.username,
         password : req.body.password,
@@ -29,8 +30,10 @@ router.post('/register', async (req, res) => {
     })
     try {
         await user.save();
-        const test = User.findOne({email : req.body.email})
-        const token = jwt.sign({_id : test._id}, process.env.secret);
+
+        //Create token
+        const getIdOfTheNewUser = User.findOne({email : req.body.email})
+        const token = jwt.sign({_id : getIdOfTheNewUser._id}, process.env.secret);
         res.send({
             token,
             username : req.body.username
