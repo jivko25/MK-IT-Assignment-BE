@@ -4,8 +4,22 @@ const User = require('../models/UserModel');
 const registerValidation = require('../validations/registerValidation');
 const jwt = require('jsonwebtoken');
 
-router.post('/login', (req, res) => {
-    res.send('login')
+router.post('/login', async (req, res) => {
+    const userToLogin = await User.findOne({email : req.body.email});
+
+    //Check if user with this email exist
+    if(!userToLogin) return res.send('User with this email does not exist!');
+
+    //Check if password is correct
+    if(userToLogin.password != req.body.password) return res.send('Wrong email or password!');
+
+    //If everything is correct create token and send it
+    const token = jwt.sign({_id : userToLogin._id}, process.env.secret);
+    res.send({
+        token,
+        username : userToLogin.username
+    });
+
 });
 
 router.post('/register', async (req, res) => {
