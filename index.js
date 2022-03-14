@@ -11,6 +11,10 @@ app.get('/' , (req, res) => {
     res.send('test')
 })
 
+app.get('/:id' , (req, res) => {
+    res.send(req.params.id)
+})
+
 mongoose.connect(process.env.MongoDBUrl, () => {
     console.log('Connected to MongoDB');
 })
