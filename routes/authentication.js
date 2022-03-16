@@ -5,6 +5,7 @@ const registerValidation = require('../validations/registerValidation');
 const jwt = require('jsonwebtoken');
 
 router.post('/login', async (req, res) => {
+    //Get user that want to login
     const userToLogin = await User.findOne({email : req.body.email});
 
     //Check if user with this email exist

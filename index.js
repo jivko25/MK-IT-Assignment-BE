@@ -7,8 +7,10 @@ const mongoose = require('mongoose');
 app.use(express.json({ extended: false }));
 
 const user = require('./routes/authentication');
+const movies = require('./routes/movies');
 
 app.use('/api/user', user);
+app.use('/api/user', movies)
 
 const PORT = process.env.PORT || 3000;
 
