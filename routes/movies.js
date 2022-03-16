@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/UserModel');
 const Movie = require('../models/MovieModel');
+const Note = require('../models/NotesModel');
+const Rating = require('../models/RatingModel');
 const movieValidation = require('../validations/movieValidation');
 
 //Get all movies of user by ownerId
@@ -10,6 +12,7 @@ router.get('/:ownerId/movies', async (req, res) => {
     res.send(movies)
 })
 
+//Post movie
 router.post('/:ownerId/movies', async (req, res) => {
     const userMovies = await User.findOne({_id : req.params.ownerId});
 
@@ -30,10 +33,26 @@ router.post('/:ownerId/movies', async (req, res) => {
 
     try {
         const savedMovie = await movie.save();
+        const note = Note({
+            movieId : savedMovie._id.toString(),
+            content : ''
+        })
+        const rating = Rating({
+            movieId : savedMovie._id.toString(),
+            content : 0
+        })
+        try {
+            note.save()
+            rating.save()
+        } catch (error) {
+            res.status(400).send(error)
+        }
         res.send(savedMovie)
     } catch (error) {
         res.status(400).send(error)
     }
 })
+
+
 
 module.exports = router;
