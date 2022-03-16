@@ -69,9 +69,38 @@ router.patch('/:ownerId/movies/:movieId/note', async (req, res) => {
     }
     else {
         //If change has been made save id
-        note.content = req.body.content;
-        await Note.updateOne({movieId : req.params.movieId}, note);
-        res.send('Note has changed successfully')
+        try {
+            note.content = req.body.content;
+            await Note.updateOne({movieId : req.params.movieId}, note);
+            res.send('Note has changed successfully')
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    }
+})
+
+//Change rating
+router.patch('/:ownerId/movies/:movieId/rating', async (req, res) => {
+    const rating = await Rating.findOne({movieId : req.params.movieId});
+
+    if(req.body.content < 0 || req.body.content > 5){
+        res.status(400).send('Rating need to be number between 0 and 5')
+    }
+
+    //Check if changes has been made
+    if(rating.content == req.body.content){
+        //If not - do nothing
+        res.send('Nothing has changed');
+    }
+    else {
+        //If change has been made save id
+        try {
+            rating.content = req.body.content;
+            await Rating.updateOne({movieId : req.params.movieId}, rating);
+            res.send('Rating has changed successfully')
+        } catch (error) {
+            res.status(400).send(error)
+        }
     }
 })
 
