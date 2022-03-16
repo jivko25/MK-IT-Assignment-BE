@@ -14,13 +14,16 @@ router.get('/:ownerId/movies', async (req, res) => {
 
 //Post movie
 router.post('/:ownerId/movies', async (req, res) => {
-    const userMovies = await User.findOne({_id : req.params.ownerId});
 
+    //Check if user exists
+    const userMovies = await User.findOne({_id : req.params.ownerId});
     if(!userMovies) return res.send(`User with id ${req.params.ownerId} does not exist!`);
 
+    //Validate body
     const error = movieValidation(req.body);
     if(error) return res.status(400).send(error);
 
+    //If body is valid create movie
     const movie = new Movie({
         title : req.body.title,
         year : req.body.year,
@@ -33,6 +36,8 @@ router.post('/:ownerId/movies', async (req, res) => {
 
     try {
         const savedMovie = await movie.save();
+
+        //When movie has been created take its id and add it as movieId in note and rating objects and save them
         const note = Note({
             movieId : savedMovie._id.toString(),
             content : ''
@@ -50,6 +55,23 @@ router.post('/:ownerId/movies', async (req, res) => {
         res.send(savedMovie)
     } catch (error) {
         res.status(400).send(error)
+    }
+})
+
+//Change note
+router.patch('/:ownerId/movies/:movieId/note', async (req, res) => {
+    const note = await Note.findOne({movieId : req.params.movieId});
+
+    //Check if changes has been made
+    if(note.content == req.body.content){
+        //If not - do nothing
+        res.send('Nothing has changed');
+    }
+    else {
+        //If change has been made save id
+        note.content = req.body.content;
+        await Note.updateOne({movieId : req.params.movieId}, note);
+        res.send('Note has changed successfully')
     }
 })
 
