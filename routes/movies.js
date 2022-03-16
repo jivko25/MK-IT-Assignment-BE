@@ -58,6 +58,16 @@ router.post('/:ownerId/movies', async (req, res) => {
     }
 })
 
+router.delete('/:ownerId/movies/:movieId', async (req, res) => {
+    const deleted = await Movie.deleteOne({_id : req.params.movieId});
+    //Remove note and rating of the movie
+    await Note.deleteOne({movieId : req.params.movieId});
+    await Rating.deleteOne({movieId : req.params.movieId});
+
+    if(deleted.deletedCount == 1) return res.send(`Movie with id ${req.params.movieId} was successfully deleted!`);
+    res.send(`Movie with id does not exist!`)
+})
+
 //Change note
 router.patch('/:ownerId/movies/:movieId/note', async (req, res) => {
     const note = await Note.findOne({movieId : req.params.movieId});
