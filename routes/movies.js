@@ -5,15 +5,16 @@ const Movie = require('../models/MovieModel');
 const Note = require('../models/NotesModel');
 const Rating = require('../models/RatingModel');
 const movieValidation = require('../validations/movieValidation');
+const verify = require('../validations/tokenVerification');
 
 //Get all movies of user by ownerId
-router.get('/:ownerId/movies', async (req, res) => {
+router.get('/:ownerId/movies', verify, async (req, res) => {
     const movies = await Movie.find({ownerId : req.params.ownerId});
     res.send(movies)
 })
 
 //Post movie
-router.post('/:ownerId/movies', async (req, res) => {
+router.post('/:ownerId/movies', verify, async (req, res) => {
 
     //Check if user exists
     const userMovies = await User.findOne({_id : req.params.ownerId});
@@ -58,7 +59,7 @@ router.post('/:ownerId/movies', async (req, res) => {
     }
 })
 
-router.delete('/:ownerId/movies/:movieId', async (req, res) => {
+router.delete('/:ownerId/movies/:movieId',verify, async (req, res) => {
     const deleted = await Movie.deleteOne({_id : req.params.movieId});
     //Remove note and rating of the movie
     await Note.deleteOne({movieId : req.params.movieId});
@@ -69,7 +70,7 @@ router.delete('/:ownerId/movies/:movieId', async (req, res) => {
 })
 
 //Change note
-router.patch('/:ownerId/movies/:movieId/note', async (req, res) => {
+router.patch('/:ownerId/movies/:movieId/note', verify, async (req, res) => {
     const note = await Note.findOne({movieId : req.params.movieId});
 
     //Check if changes has been made
@@ -90,7 +91,7 @@ router.patch('/:ownerId/movies/:movieId/note', async (req, res) => {
 })
 
 //Change rating
-router.patch('/:ownerId/movies/:movieId/rating', async (req, res) => {
+router.patch('/:ownerId/movies/:movieId/rating',verify, async (req, res) => {
     const rating = await Rating.findOne({movieId : req.params.movieId});
 
     if(req.body.content < 0 || req.body.content > 5){
