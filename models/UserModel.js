@@ -16,11 +16,6 @@ const userSchema = mongoose.Schema({
     email : {
         type : String,
         require : true
-    },
-    movies : {
-        type : Array,
-        require : true,
-        default : []
     }
 })
 

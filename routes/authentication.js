@@ -9,10 +9,10 @@ router.post('/login', async (req, res) => {
     const userToLogin = await User.findOne({email : req.body.email});
 
     //Check if user with this email exist
-    if(!userToLogin) return res.send('User with this email does not exist!');
+    if(!userToLogin) return res.status(400).send('User with this email does not exist!');
 
     //Check if password is correct
-    if(userToLogin.password != req.body.password) return res.send('Wrong email or password!');
+    if(userToLogin.password != req.body.password) return res.status(400).send('Wrong email or password!');
 
     //If everything is correct create token and send it
     const token = jwt.sign({_id : userToLogin._id}, process.env.secret);
@@ -30,18 +30,17 @@ router.post('/register', async (req, res) => {
 
     //Check if email exists
     const checkIfEmailExist = await User.findOne({email : req.body.email});
-    if(checkIfEmailExist) return res.send(`User with email ${req.body.email} already exist`);
+    if(checkIfEmailExist) return res.status(400).send(`User with email ${req.body.email} already exist`);
 
     //Check if username exists
     const checkIfUserNameExist = await User.findOne({username : req.body.username});
-    if(checkIfUserNameExist) return res.send(`User with username ${req.body.username} already exist`);
+    if(checkIfUserNameExist) return res.status(400).send(`User with username ${req.body.username} already exist`);
 
     //Create user
     const user = new User({
         username : req.body.username,
         password : req.body.password,
         email : req.body.email,
-        movies : []
     })
     try {
         await user.save();
