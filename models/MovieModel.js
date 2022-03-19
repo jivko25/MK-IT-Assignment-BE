@@ -20,16 +20,15 @@ const movieSchema = mongoose.Schema({
     },
     image : {
         type : String,
-        require : true
+        require : false
     },
     description : {
         type : String,
-        require : true,
-        min : 10
+        require : false
     },
     officialSite : {
         type : String,
-        require : true
+        require : false
     },
     ownerId : {
         type : String,

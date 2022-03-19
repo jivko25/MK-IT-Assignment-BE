@@ -5,8 +5,8 @@ const schema = Joi.object({
     year : Joi.number().required(),
     genre : Joi.array().required().default([]),
     time : Joi.number().required(),
-    description : Joi.string().required(),
-    officialSite : Joi.string().required().uri(),
+    description : Joi.string(),
+    officialSite : Joi.string().uri(),
     image : Joi.string().required().uri()
 })
 
