@@ -7,6 +7,7 @@ const schema = Joi.object({
     time : Joi.number().required(),
     description : Joi.string().required(),
     officialSite : Joi.string().required().uri(),
+    image : Joi.string().required().uri()
 })
 
 

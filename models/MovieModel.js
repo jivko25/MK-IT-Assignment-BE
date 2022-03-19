@@ -18,6 +18,10 @@ const movieSchema = mongoose.Schema({
         type : Number,
         require : true
     },
+    image : {
+        type : String,
+        require : true
+    },
     description : {
         type : String,
         require : true,

@@ -32,7 +32,8 @@ router.post('/:ownerId/movies', verify, async (req, res) => {
         time : req.body.time,
         description : req.body.description,
         officialSite : req.body.officialSite,
-        ownerId :req.params.ownerId
+        ownerId :req.params.ownerId,
+        image : req.body.image
     })
 
     try {
