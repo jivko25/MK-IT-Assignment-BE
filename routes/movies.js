@@ -18,7 +18,7 @@ router.post('/:ownerId/movies', verify, async (req, res) => {
 
     //Check if user exists
     const userMovies = await User.findOne({_id : req.params.ownerId});
-    if(!userMovies) return res.send(`User with id ${req.params.ownerId} does not exist!`);
+    if(!userMovies) return res.status(400).send(`User with id ${req.params.ownerId} does not exist!`);
 
     //Validate body
     const error = movieValidation(req.body);
@@ -66,7 +66,7 @@ router.delete('/:ownerId/movies/:movieId',verify, async (req, res) => {
     await Rating.deleteOne({movieId : req.params.movieId});
 
     if(deleted.deletedCount == 1) return res.send(`Movie with id ${req.params.movieId} was successfully deleted!`);
-    res.send(`Movie with id does not exist!`)
+    res.status(400).send(`Movie with id does not exist!`)
 })
 
 //Change note
