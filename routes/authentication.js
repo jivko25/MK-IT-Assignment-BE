@@ -19,6 +19,7 @@ router.post('/login', async (req, res) => {
     res.send({
         token,
         username : userToLogin.username,
+        email : req.body.email,
         id : userToLogin._id
     });
 
@@ -52,6 +53,7 @@ router.post('/register', async (req, res) => {
         res.send({
             token,
             username : req.body.username,
+            email : req.body.email,
             id : getIdOfTheNewUser._id
         });
     } catch (error) {
