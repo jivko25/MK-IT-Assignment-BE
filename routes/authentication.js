@@ -18,7 +18,8 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({_id : userToLogin._id}, process.env.secret);
     res.send({
         token,
-        username : userToLogin.username
+        username : userToLogin.username,
+        id : userToLogin._id
     });
 
 });
@@ -50,7 +51,8 @@ router.post('/register', async (req, res) => {
         const token = jwt.sign({_id : getIdOfTheNewUser._id}, process.env.secret);
         res.send({
             token,
-            username : req.body.username
+            username : req.body.username,
+            id : getIdOfTheNewUser._id
         });
     } catch (error) {
         res.status(400).send(error)
