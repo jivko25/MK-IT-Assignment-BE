@@ -50,11 +50,12 @@ router.post('/register', async (req, res) => {
         //Create token
         const getIdOfTheNewUser = User.findOne({email : req.body.email})
         const token = jwt.sign({_id : getIdOfTheNewUser._id}, process.env.secret);
+        const newUser = await User.findOne({email : req.body.email});
         res.send({
             token,
             username : req.body.username,
             email : req.body.email,
-            id : getIdOfTheNewUser._id.toString()
+            id : newUser._id
         });
     } catch (error) {
         res.status(400).send(error)
