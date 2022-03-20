@@ -8,6 +8,9 @@
 
 This project is back-end part MK-IT-Assignment project.
 
+Link to Front-End repository: https://github.com/jivko25/MK-IT-Assignment-FE
+Link to deployed version: https://mk-it-assignment-fe.vercel.app/
+
 ### Technologies
 
 * Node.js
