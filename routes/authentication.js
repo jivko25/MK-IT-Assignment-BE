@@ -54,7 +54,7 @@ router.post('/register', async (req, res) => {
             token,
             username : req.body.username,
             email : req.body.email,
-            id : getIdOfTheNewUser._id
+            id : getIdOfTheNewUser._id.toString()
         });
     } catch (error) {
         res.status(400).send(error)
