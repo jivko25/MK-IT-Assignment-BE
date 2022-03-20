@@ -16,6 +16,8 @@ This project is back-end part MK-IT-Assignment project.
 * Mongoose
 * JsonWebToken(jwt)
 * @hapi/joi
+* Jest
+* Supertest
 * This app is deployed on vercel ptalform
 
 ### How to start this project localy
