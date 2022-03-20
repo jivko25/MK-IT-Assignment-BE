@@ -91,6 +91,12 @@ router.patch('/:ownerId/movies/:movieId/note', verify, async (req, res) => {
     }
 })
 
+router.get('/:ownerId/movies/:movieId/note', verify, async (req, res) => {
+    const note = await Note.findOne({movieId : req.params.movieId});
+    if(!note) return res.status(400).send('Note does not exist!')
+    res.send(note);
+})
+
 //Change rating
 router.patch('/:ownerId/movies/:movieId/rating',verify, async (req, res) => {
     const rating = await Rating.findOne({movieId : req.params.movieId});
@@ -114,6 +120,13 @@ router.patch('/:ownerId/movies/:movieId/rating',verify, async (req, res) => {
             res.status(400).send(error)
         }
     }
+})
+
+router.get('/:ownerId/movies/:movieId/rating',verify, async (req, res) => {
+    const rating = await Rating.findOne({movieId : req.params.movieId});
+    
+    if(!rating) return res.status(400).send('Rating does not exist!');
+    res.send(rating);
 })
 
 
