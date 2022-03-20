@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
         const getIdOfTheNewUser = User.findOne({email : req.body.email})
         const token = jwt.sign({_id : getIdOfTheNewUser._id}, process.env.secret);
         const newUser = await User.findOne({email : req.body.email});
-        res.send({
+        res.status(200).send({
             token,
             username : req.body.username,
             email : req.body.email,
